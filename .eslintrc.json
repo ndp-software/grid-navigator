@@ -1,0 +1,85 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "globals": {
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": [
+      "off",
+      2,
+      {
+        "CallExpression": {
+          "arguments": "off"
+        },
+        "FunctionExpression": {
+          "parameters": "off"
+        },
+        "MemberExpression": "off",
+        "ObjectExpression": "first",
+        "SwitchCase": 2,
+        "VariableDeclarator": 1,
+        "flatTernaryExpressions": false
+      }
+    ],
+    "key-spacing": [
+      "error",
+      {
+        "beforeColon": false,
+        "mode": "minimum",
+        "align": "value"
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "no-console": 1,
+    "no-constant-condition": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_.*",
+        "varsIgnorePattern": "^_.*"
+      }
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/**/*spec.js"
+      ],
+      "globals": {
+        "after": "readonly",
+        "afterEach": "readonly",
+        "before": "readonly",
+        "beforeEach": "readonly",
+        "describe": "readonly",
+        "it": "readonly",
+        "xdescribe": "readonly",
+        "xit": "readonly"
+      }
+    }
+  ]
+}

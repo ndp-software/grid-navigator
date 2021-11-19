@@ -51,7 +51,9 @@ export class Stepper {
   pageDown = (i: number) => Math.min(this._lastIndex, i + this._pageSize * this._rowLength)
 }
 
-function propsOfObject (obj: any): string[] {
+interface Objectish {
+}
+function propsOfObject (obj: Objectish): string[] {
   return Object.keys(obj)
                .filter((p) => p[0] !== '_')
 }

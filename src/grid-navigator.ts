@@ -66,7 +66,7 @@ type GridNavigatorInit<E extends Node> = {
 export class GridNavigator<E extends HTMLElement> {
 
   private elements: NodeListOf<E> | null
-  private elemsProviderFn: () => NodeListOf<E>
+  private readonly elemsProviderFn: () => NodeListOf<E>
   private readonly selectCallback: (e: E, selectNow: boolean) => void
   private navigateToFn: ObjectGridNavigator<E> | null
   private readonly keyMap: KeyToMoveOpMap
@@ -157,10 +157,10 @@ export class GridNavigator<E extends HTMLElement> {
    */
   private rowHt (): number {
     if (this.elems().length < 4) return 1
-    const posx = Math.round(this.elems()[0].offsetLeft)
+    const x = Math.round(this.elems()[0].offsetLeft)
 
     for (let i = 1; i < this.elems().length; i++)
-      if (Math.round(this.elems()[i].offsetLeft) == posx) return i
+      if (Math.round(this.elems()[i].offsetLeft) == x) return i
     return 1
   }
 }

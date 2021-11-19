@@ -1,7 +1,7 @@
 {
   "name": "grid-navigator",
   "version": "1.0.0prerelease1",
-  "description": "",
+  "description": "no-fuss accessible keyboard navigation handling to a grid component",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [
@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "clean": "rm -rf ./dist/*",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --fix --ext=.ts src",
+    "test": "find ./src -name '*spec.ts' -print | xargs ./node_modules/.bin/mocha --require=ts-node/register",
     "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "prepublishOnly": "yarn tsc"
   },
@@ -30,13 +31,13 @@
     "@types/sinon": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
-
     "chai": "*",
     "eslint": "*",
     "keyboard-event-to-string": "*",
     "mocha": "*",
     "mocha-unfunk-reporter": "*",
     "sinon": "*",
+    "ts-node": "^10.4.0",
     "typescript": "*"
   }
 }
