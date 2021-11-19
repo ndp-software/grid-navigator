@@ -1,0 +1,42 @@
+{
+  "name": "grid-navigator",
+  "version": "1.0.0prerelease1",
+  "description": "",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "dist/cjs",
+    "dist/esm"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist/*",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "prepublishOnly": "yarn tsc"
+  },
+  "keywords": [
+    "grid",
+    "accessibility",
+    "keyboard",
+    "navigation",
+    "arrow keys"
+  ],
+  "author": "Andrew Peterson",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "*",
+    "@types/mocha": "*",
+    "@types/node": "*",
+    "@types/sinon": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+
+    "chai": "*",
+    "eslint": "*",
+    "keyboard-event-to-string": "*",
+    "mocha": "*",
+    "mocha-unfunk-reporter": "*",
+    "sinon": "*",
+    "typescript": "*"
+  }
+}
