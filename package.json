@@ -11,9 +11,9 @@
   "scripts": {
     "clean": "rm -rf ./dist/*",
     "lint": "eslint --fix --ext=.ts src",
-    "test": "find ./src -name '*spec.ts' -print | xargs ./node_modules/.bin/mocha --require=ts-node/register",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha",
     "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "prepublishOnly": "yarn tsc"
+    "prepublishOnly": "yarn clean && yarn tsc"
   },
   "keywords": [
     "grid",
