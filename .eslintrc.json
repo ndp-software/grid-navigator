@@ -19,7 +19,7 @@
   },
   "rules": {
     "indent": [
-      "off",
+      "error",
       2,
       {
         "CallExpression": {
@@ -49,6 +49,7 @@
     ],
     "no-console": 1,
     "no-constant-condition": 0,
+    "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
