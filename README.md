@@ -23,7 +23,7 @@ If you have a grid of elements, images or tiles, and you'd like to add keyboard 
 
 ### 1. Include the package in your project, eg.
    ```shell
-   npm add --save grid-nav
+   npm add --save grid-navigator
    ```
    (Yarn and Typescript also work.)
 
@@ -53,8 +53,11 @@ This may also need some accompanying CSS, such as:
  ```
 
 ### 4. Create a navigator:
+
 ```typescript
-const myNav = new GridNavigator({elementProvider, selectCallback})
+import { GridNavigator } from 'grid-navigator'
+
+const myNav = new GridNavigator({ elementProvider, selectCallback })
 ```
 
 ### 5. Call the handler from the keydown handler of your grid container.
@@ -97,7 +100,7 @@ export const NAV_AND_ARROW_MAP: KeyToMoveOpMap = {
 ```
 You can amend this with any of your own. For convenience, VI-ish and EMACS-ish maps are provided:
 ```typescript
-import { EMACS_MAP, VI_MAP, NAV_AND_ARROW_MAP } from 'grid-nav/key-maps'
+import { EMACS_MAP, VI_MAP, NAV_AND_ARROW_MAP } from 'grid-navigator'
 
 myKeyMaps = [...NAV_AND_ARROW_MAP, ...VI_MAP]
 
