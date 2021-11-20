@@ -1,0 +1,10 @@
+# the files to not push to NPM
+.*ignore
+.eslintrc.json
+dist/**/*spec.js
+dist/**/*spec.d.ts
+dist/**/*spec.js.map
+src/
+tsconfig*
+yarn.lock
+
