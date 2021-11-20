@@ -3,10 +3,10 @@ import { expect }    from 'chai'
 
 describe('gridWalker', () => {
   const subject = subjects.gridWalker({
-                                        cellCount:   8,
-                                        columnCount: 3,
-                                        pageSize:    5
-                                      })
+    cellCount:   8,
+    columnCount: 3,
+    pageSize:    5
+  })
 
   specify('navigates', () => {
     const actual = subject('next', 1)

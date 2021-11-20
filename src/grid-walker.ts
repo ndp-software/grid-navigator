@@ -9,10 +9,10 @@ import {MoveOp, Stepper} from './stepper'
  * @param pageSize the vertical size of a "page" for the pageUp and down operations
  */
 export function gridWalker({
-                             cellCount,
-                             columnCount,
-                             pageSize
-                           }: {
+  cellCount,
+  columnCount,
+  pageSize
+}: {
   cellCount: number,
   columnCount: number,
   pageSize: number

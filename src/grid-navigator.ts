@@ -72,10 +72,10 @@ export class GridNavigator<E extends HTMLElement> {
   private readonly keyMap: KeyToMoveOpMap
 
   constructor ({
-                 elementsProvider,
-                 selectCallback,
-                 keyMap = NAV_AND_ARROW_MAP
-               }: GridNavigatorInit<E>
+    elementsProvider,
+    selectCallback,
+    keyMap = NAV_AND_ARROW_MAP
+  }: GridNavigatorInit<E>
   ) {
     this.elemsProviderFn = elementsProvider
     this.selectCallback  = selectCallback
