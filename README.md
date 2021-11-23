@@ -9,7 +9,7 @@ Provides no-fuss accessible keyboard navigation handling to a grid component. Th
 - rigorously tested
 - customizable
 
-It's convenient and recommended for data grids to have keyboard navigation. The W3 [recommends certain behaviors](https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids), but this isn't built in to HTML-- nor is it easily obtainable. You have to write some Javascript and messy `switch` statements. Once you start writing this, you realize the actual math of the situation is a little tricky-- or at least tedious. With any sort of responsive layout, moving the the "next row" is a dynamic calculation, not just an addition, as is finding the first or last element of the row.
+For our users' sake, it's convenient and recommended for data grids to have keyboard navigation. The W3 [recommends certain behaviors](https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids), but this isn't built in to HTML-- nor is it easily obtainable. You have to write some Javascript and messy `switch` statements. Once you start writing this, you realize the actual math of the situation is a little tricky-- or at least tedious. With any sort of responsive layout, moving the the "next row" is a dynamic calculation, not just an addition, as is finding the first or last element of the row.
 
 This package handles all that with a simple TypeScript-compatible package.
 
@@ -80,7 +80,7 @@ navigated, but once calculated, it assumes they are stable. If the elements chan
 
 ## Customization
 
-### Keyboard map.
+### Keyboard Map
 
 The grid navigator accepts a `keyMap` property to so that you can
 control in fine detail which keystrokes are handled. These are a map from a named key to a "moveOp", of the type `MoveOp`. The naming scheme is provided by [keyboard-event-to-string](https://www.npmjs.com/package/keyboard-event-to-string). The defaults are those suggested by [the w3 documentation](https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids):
@@ -109,7 +109,11 @@ const myNav = new GridNavigator({keyMap: myKeyMaps,
 ...
 ```
 
+## License
+
+Contact me for licensing or consulting.
+
 ## Credits
-* [Useful post for creating "universal" typescript libraries](https://blog.logrocket.com/publishing-node-modules-typescript-es-modules/)
+* [Build A Library With esbuild](https://medium.com/geekculture/build-a-library-with-esbuild-23235712f3c)
 
 Copyright (c) 2021 Andrew J. Peterson, NDP Software. All Rights Reserved.
