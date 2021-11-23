@@ -3,17 +3,22 @@
   "version": "1.0.0prerelease1",
   "description": "no-fuss accessible keyboard navigation handling to a grid component",
   "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "module": "./lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
-    "dist/cjs",
-    "dist/esm"
+    "README.md",
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/index.js.map"
   ],
   "scripts": {
-    "clean": "rm -rf ./dist/*",
+    "build": "yarn clean && yarn build-lib && yarn ts-types",
+    "build-lib": "./node_modules/.bin/esbuild --outfile=./dist/index.js --bundle --sourcemap  --minify --format=esm --target=esnext src/index.ts",
+    "clean": "rm -rf ./dist/* ./lib/*",
     "lint": "eslint --fix --ext=.ts src",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha",
-    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "prepublishOnly": "yarn clean && yarn tsc"
+    "ts-types": "tsc --emitDeclarationOnly --outFile dist/index",
+    "prepublishOnly": "yarn build"
   },
   "keywords": [
     "grid",
@@ -23,7 +28,7 @@
     "arrow keys"
   ],
   "author": "Andrew Peterson",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@types/chai": "*",
     "@types/mocha": "*",
@@ -32,12 +37,13 @@
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "chai": "*",
+    "esbuild": "*",
     "eslint": "*",
     "keyboard-event-to-string": "*",
     "mocha": "*",
     "mocha-unfunk-reporter": "*",
     "sinon": "*",
-    "ts-node": "^10.4.0",
+    "ts-node": "*",
     "typescript": "*"
   }
 }
