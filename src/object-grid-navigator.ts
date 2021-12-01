@@ -1,6 +1,6 @@
 // Copyright (c) Andrew J. Peterson. All Rights Reserved.
-import {MoveOp, isMoveOp} from './stepper'
-import {gridWalker}       from './grid-walker'
+import { MoveOp, isMoveOp } from './stepper'
+import { gridWalker } from './grid-walker'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Objectish {
@@ -22,13 +22,15 @@ export type ObjectGridNavigator<O extends Objectish> =
 export function indexOf<T>(
   a: Arrayish<T>,
   el: T | null,
-  notFoundIndex = -1): number {
+  notFoundIndex = -1): number{
   for (let i = 0; i < a.length; i++)
     if (a[i] === el) return i
   return notFoundIndex
 }
 
 /**
+ * Stateful function tracking a moveable selection within a grid.
+ *
  * Given a list of objects, `objs`, a `columnCount` and `pageSize`,
  * returns a function that readily navigates around a grid based
  * on "commands" of type `MoveOp`.
@@ -36,7 +38,7 @@ export function indexOf<T>(
  * This function can be called in 3 ways:
  * - if given no parameters, returns the "current" object
  * - if given a `MoveOp`, navigates a grid
- * - if given an object in the list, navigates to the specific object
+ * - if given an object in the list, navigates to that specific object
  *
  * @param objs a list of objects, such as DOM nodes.
  * @param columnCount width of the grid, eg. 3
@@ -52,13 +54,20 @@ export function objectGridNavigator<O extends Objectish>(
   pageSize: number,
   onSelectCallback: (node: O, prevNode: O | null) => void,
   initialNode: O | null = null
-): ObjectGridNavigator<O> {
+): ObjectGridNavigator<O>{
+
+  /*
+  This function is primarily responsible for:
+  - mapping from the objects to the numeric indices that
+    `gridWalker` understands, and back again.
+  - maintaining the "current" selection, kept in `prevIndex`
+   */
 
   let prevIndex = indexOf(objs, initialNode, 0)
 
   const walker = gridWalker({
-    cellCount: objs.length, columnCount, pageSize
-  })
+                              cellCount: objs.length, columnCount, pageSize
+                            })
 
   return (dirOrNode?: MoveOp | O) => {
 

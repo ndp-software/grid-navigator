@@ -61,7 +61,10 @@ type GridNavigatorInit<E extends Node> = {
  *  ```
  *  document.addEventHandler('keydown', (e) => if !(myNav.onKeyDown(e)) // do you normal stuff )
  *  ```
- *  If your elements change, let your nav know: `myNav.markStale()`
+ *  If your elements change, let your nav know:
+ *  ```
+ *  myNav.markStale()
+ *  ```
  */
 export class GridNavigator<E extends HTMLElement> {
 
@@ -89,16 +92,6 @@ export class GridNavigator<E extends HTMLElement> {
   }
 
   /**
-   * Call when the the elements have changed.
-   * This will force a recalculation of the elements
-   * using the `elementsProvider`.
-   */
-  markStale (): void {
-    this.elements     = null
-    this.navigateToFn = null
-  }
-
-  /**
    * Handle the keyboard navigation.
    * @param e the keydown event
    * @returns true if the keystroke was handled, false otherwise.
@@ -122,6 +115,16 @@ export class GridNavigator<E extends HTMLElement> {
   navigateTo (dirOrNode?: MoveOp | E): E {
     if (this.navigateToFn === null) this.navigateToFn = this.buildNavigateTo()
     return this.navigateToFn(dirOrNode)
+  }
+
+  /**
+   * Call when the the elements have changed.
+   * This will force a recalculation of the elements
+   * using the `elementsProvider`.
+   */
+  markStale (): void {
+    this.elements     = null
+    this.navigateToFn = null
   }
 
   private elems () {
