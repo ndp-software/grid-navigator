@@ -1,23 +1,29 @@
 {
   "name": "grid-navigator",
-  "version": "1.0.0prerelease1",
+  "version": "1.0.0-prerelease3",
   "description": "no-fuss accessible keyboard navigation handling to a grid component",
-  "main": "./dist/cjs/index.js",
+  "main": "./dist/index.js",
   "module": "./lib/index.js",
-  "types": "lib/index.d.ts",
+  "types": "./types/index.d.ts",
   "files": [
     "README.md",
     "dist/index.js",
     "dist/index.d.ts",
-    "dist/index.js.map"
+    "dist/index.js.map",
+    "types/grid-navigator.d.ts",
+    "types/grid-walker.d.ts",
+    "types/index.d.ts",
+    "types/key-maps.d.ts",
+    "types/object-grid-navigator.d.ts",
+    "types/stepper.d.ts"
   ],
   "scripts": {
     "build": "yarn clean && yarn build-lib && yarn ts-types",
     "build-lib": "./node_modules/.bin/esbuild --outfile=./dist/index.js --bundle --sourcemap  --minify --format=esm --target=esnext src/index.ts",
-    "clean": "rm -rf ./dist/* ./lib/*",
+    "clean": "rm -f ./dist/* ./types/*",
     "lint": "eslint --fix --ext=.ts src",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha",
-    "ts-types": "tsc --emitDeclarationOnly --outFile dist/index",
+    "ts-types": "tsc --emitDeclarationOnly --outDir types --declaration src/index.ts",
     "prepublishOnly": "yarn build"
   },
   "keywords": [
