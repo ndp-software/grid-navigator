@@ -66,8 +66,8 @@ export function objectGridNavigator<O extends Objectish>(
   let prevIndex = indexOf(objs, initialNode, 0)
 
   const walker = gridWalker({
-                              cellCount: objs.length, columnCount, pageSize
-                            })
+    cellCount: objs.length, columnCount, pageSize
+  })
 
   return (dirOrNode?: MoveOp | O) => {
 
