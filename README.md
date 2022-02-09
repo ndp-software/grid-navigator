@@ -100,13 +100,13 @@ export const NAV_AND_ARROW_MAP: KeyToMoveOpMap = {
 ```
 You can amend this with any of your own. For convenience, VI-ish and EMACS-ish maps are provided:
 ```typescript
-import { EMACS_MAP, VI_MAP, NAV_AND_ARROW_MAP } from 'grid-navigator'
+import { KeyMaps } from 'grid-navigator'
 
-myKeyMaps = [...NAV_AND_ARROW_MAP, ...VI_MAP]
+myKeyMaps = [...KeyMaps.NAV_AND_ARROW_MAP, ...KeyMaps.VI_MAP]
 
 const myNav = new GridNavigator({keyMap: myKeyMaps,
-                                  elementProvider, selectCallback})
-...
+                                  elementProvider, 
+                                  selectCallback } )
 ```
 
 ## License
@@ -116,4 +116,4 @@ Contact me for licensing or consulting.
 ## Credits
 * [Build A Library With esbuild](https://medium.com/geekculture/build-a-library-with-esbuild-23235712f3c)
 
-Copyright (c) 2021 Andrew J. Peterson, NDP Software. All Rights Reserved.
+Copyright (c) 2021–2022 Andrew J. Peterson, NDP Software. All Rights Reserved.

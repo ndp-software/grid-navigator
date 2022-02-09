@@ -1,2 +1,4 @@
-export { GridNavigator } from './grid-navigator'
-export * as KeyMaps from './key-maps'
+import { GridNavigator  } from './grid-navigator'
+import * as KeyMaps from './key-maps'
+
+export { GridNavigator, KeyMaps }
