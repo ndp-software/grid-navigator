@@ -19,6 +19,8 @@ A proper demo will come, but in the meantime, see [https://amp-what.com](https:/
 
 ## Steps to integrate
 
+[![Node.js CI](https://github.com/ndp-software/grid-navigator/actions/workflows/node.js.yml/badge.svg)](https://github.com/ndp-software/grid-navigator/actions/workflows/node.js.yml)
+
 If you have a grid of elements, images or tiles, and you'd like to add keyboard navigation, the process is just a few steps:
 
 ### 1. Include the package in your project, eg.
