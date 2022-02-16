@@ -1,5 +1,5 @@
 // Copyright (c) Andrew J. Peterson. All Rights Reserved.
-import { KeyToMoveOpMap, NAV_AND_ARROW_MAP } from './key-maps'
+import { KeyToMoveOpMap, DEFAULT_STANDARD } from './key-maps'
 import {
   indexOf,
   objectGridNavigator,
@@ -77,7 +77,7 @@ export class GridNavigator<E extends HTMLElement> {
   constructor ({
     elementsProvider,
     selectCallback,
-    keyMap = NAV_AND_ARROW_MAP
+    keyMap = DEFAULT_STANDARD
   }: GridNavigatorInit<E>
   ) {
     this.elemsProviderFn = elementsProvider
@@ -140,7 +140,7 @@ export class GridNavigator<E extends HTMLElement> {
 
     return objectGridNavigator(
       this.elems(),
-      this.rowHt(),
+      this.columnCount(),
       3,
       ((newEl: E, prevEl: E | null) => {
         if (prevEl)
@@ -158,7 +158,7 @@ export class GridNavigator<E extends HTMLElement> {
    * There are certainly other strategies that will do this.
    * @private
    */
-  private rowHt (): number {
+  private columnCount (): number {
     if (this.elems().length < 4) return 1
     const x = Math.round(this.elems()[0].offsetLeft)
 
