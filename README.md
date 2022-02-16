@@ -87,14 +87,12 @@ The code uses the `elementProvider` you give it to calculate the elements that a
 navigated. Once they are calculated, it assumes they are stable unless you tell it otherwise. To tell it, if the elements change, simply call `myNav.markStale()`, and `elementProvider` will be called again when needed.
 
 
-## Customization
+## Key Bindings
 
-### Keyboard Map
+The default key bindings are those suggested by [the w3 documentation](https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids). These are specified within grid-navigator using a Javascript object, interpreted as a map:
 
-The grid navigator accepts a `keyMap` property to so that you can
-control in fine detail which keystrokes are handled. These are a map from a named key to a "moveOp", of the type `MoveOp`. The naming scheme is provided by [keyboard-event-to-string](https://www.npmjs.com/package/keyboard-event-to-string). The defaults are those suggested by [the w3 documentation](https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids):
 ```typescript
-export const NAV_AND_ARROW_MAP: KeyToMoveOpMap = {
+export const DEFAULT_STANDARD: KeyToMoveOpMap = {
   'ArrowLeft':   'prev',
   'ArrowRight':  'next',
   'ArrowUp':     'up',
@@ -107,16 +105,34 @@ export const NAV_AND_ARROW_MAP: KeyToMoveOpMap = {
   'Ctrl + End':  'last',
 }
 ```
-You can amend this with any of your own. For convenience, VI-ish and EMACS-ish maps are provided:
+
+#### Supplementary Keyboard Map
+
+You can amend this map with any of your own. 
+
+For convenience, a few supplementary key bindings are provided:
+* `VI`-ish
+* `EMACS`-ish
+* `NUMPAD`, for navigation using a numeric keypad. This is outside the standard recommendation, but convenient for some users.
+
+To use any of these, import them and pass them in to the `GridNavigator` constructor:
 ```typescript
 import { KeyMaps } from 'grid-navigator'
 
-myKeyMaps = [...KeyMaps.NAV_AND_ARROW_MAP, ...KeyMaps.VI_MAP]
+myKeyMaps = [...KeyMaps.DEFAULT_STANDARD, ...KeyMaps.VI, KeyMaps.EMACS]
 
 const myNav = new GridNavigator({keyMap: myKeyMaps,
                                   elementProvider, 
                                   selectCallback } )
 ```
+#### Overriding 
+
+The grid navigator accepts a `keyMap` property to so that you can
+control in fine detail how keystrokes are handled. As described above, this is a Javascript object used as
+a map from a key value to a "moveOp". 
+* The keyboard value is provided by [keyboard-event-to-string](https://www.npmjs.com/package/keyboard-event-to-string).
+* The "move" is encapsulated by the `MoveOp` type.
+
 
 ## License
 
