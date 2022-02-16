@@ -5,7 +5,7 @@ export type KeyToMoveOpMap = { [k: string]: MoveOp }
 
 
 // https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids
-export const NAV_AND_ARROW_MAP: KeyToMoveOpMap = {
+export const DEFAULT_STANDARD: KeyToMoveOpMap = {
   'ArrowLeft':   'prev',
   'ArrowRight':  'next',
   'ArrowUp':     'up',
@@ -19,7 +19,7 @@ export const NAV_AND_ARROW_MAP: KeyToMoveOpMap = {
 }
 
 // Confirmed here: https://github.com/getgauge/taiko/blob/master/lib/data/USKeyboardLayout.js
-export const NUMPAD_MAP: KeyToMoveOpMap = {
+export const NUMPAD: KeyToMoveOpMap = {
   'Numpad1':        'endOfLine',
   'Numpad2':        'down',
   'Numpad3':        'pageDown',
@@ -32,7 +32,7 @@ export const NUMPAD_MAP: KeyToMoveOpMap = {
   'Ctrl + Numpad1': 'last'
 }
 
-export const VI_MAP: KeyToMoveOpMap = {
+export const VI: KeyToMoveOpMap = {
   'Comma':          'first',// M-<
   'Digit4':         'last', // M-$
   'H':              'left',
@@ -51,7 +51,7 @@ export const VI_MAP: KeyToMoveOpMap = {
   'Ctrl + F':       'pageDown'
 }
 
-export const EMACS_MAP: KeyToMoveOpMap = {
+export const EMACS: KeyToMoveOpMap = {
   'A':        'startOfLine',
   'B':        'prev',
   'E':        'endOfLine',
@@ -66,10 +66,6 @@ export const EMACS_MAP: KeyToMoveOpMap = {
   'Ctrl + P': 'up'
 }
 
-export const CONSOLIDATED_MAP: KeyToMoveOpMap = {
-  ...EMACS_MAP,
-  ...VI_MAP,
-  ...NUMPAD_MAP,
-  ...NAV_AND_ARROW_MAP
-}
+export const CONSOLIDATED_MAP: KeyToMoveOpMap =
+  Object.assign({}, EMACS, VI, NUMPAD, DEFAULT_STANDARD); // Note ES3 syntax
 
