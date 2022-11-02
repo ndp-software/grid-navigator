@@ -44,6 +44,13 @@ type GridNavigatorInit<E extends Node> = {
    * specific mappings here.
    */
   keyMap?: KeyToMoveOpMap
+
+  /**
+   * Optional callback function to set the number of columns currently displayed.
+   * The default will look at the position of the elements on the page and make a
+   * good guess, assuming a regular grid.
+   */
+  columnCountCalculator: (elems: NodeListOf<E>) => number
 }
 
 
@@ -77,7 +84,8 @@ export class GridNavigator<E extends HTMLElement> {
   constructor ({
     elementsProvider,
     selectCallback,
-    keyMap = DEFAULT_STANDARD
+    keyMap = DEFAULT_STANDARD,
+    columnCountCalculator
   }: GridNavigatorInit<E>
   ) {
     this.elemsProviderFn = elementsProvider
@@ -85,6 +93,9 @@ export class GridNavigator<E extends HTMLElement> {
     this.elements        = null
     this.navigateToFn    = null
     this.keyMap          = keyMap
+
+    if (columnCountCalculator)
+      this.columnCountEstimator = columnCountCalculator
 
     // TODO: figure out when this listener should be removed
     window.addEventListener('resize', () =>
@@ -147,7 +158,11 @@ export class GridNavigator<E extends HTMLElement> {
           this.selectCallback(prevEl, false)
         this.selectCallback(newEl, true)
       }),
-      current) // as unknown as ObjectGridNavigator<E>
+      current)
+  }
+
+  private columnCount(): number {
+    return this.columnCountEstimator(this.elems())
   }
 
   /**
@@ -156,14 +171,13 @@ export class GridNavigator<E extends HTMLElement> {
    * row start at the same horizontal offset as the previous row.
    *
    * There are certainly other strategies that will do this.
-   * @private
    */
-  private columnCount (): number {
-    if (this.elems().length < 4) return 1
-    const x = Math.round(this.elems()[0].offsetLeft)
+  columnCountEstimator = (elems: NodeListOf<E>) =>  {
+    if (elems.length < 4) return 1
+    const x = Math.round(elems[0].offsetLeft)
 
-    for (let i = 1; i < this.elems().length; i++)
-      if (Math.round(this.elems()[i].offsetLeft) == x) return i
+    for (let i = 1; i < elems.length; i++)
+      if (Math.round(elems[i].offsetLeft) == x) return i
     return 1
   }
 }

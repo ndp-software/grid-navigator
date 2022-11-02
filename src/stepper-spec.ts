@@ -77,6 +77,7 @@ describe('isMoveOp', () => {
 
   specify('up', () => expect(subjects.isMoveOp('up')).to.eq(true))
   specify('down', () => expect(subjects.isMoveOp('down')).to.eq(true))
+  specify('first', () => expect(subjects.isMoveOp('first')).to.eq(true))
   specify('pageDown', () => expect(subjects.isMoveOp('pageDown')).to.eq(true))
 
   specify('string that not a direction', () => expect(subjects.isMoveOp('sideways')).to.eq(false))

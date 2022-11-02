@@ -8,13 +8,14 @@ interface Objectish {
 
 // Trimmed down definition of an Array. No pop, push, etc.
 // Compatible with NodeList<>
+// kinda type Arrayish<T extends Objectish> = Array<T> | NodeList
 type Arrayish<T> = {
   length: number
   [n: number]: T
 }
 
 // Function exported from this module. Navigate a list
-// of objects layed out as a grid.
+// of objects that are layed out as a grid.
 export type ObjectGridNavigator<O extends Objectish> =
   (dirOrNode?: MoveOp | O) => O
 
@@ -71,20 +72,22 @@ export function objectGridNavigator<O extends Objectish>(
 
   return (dirOrNode?: MoveOp | O) => {
 
-    // Return where we are now?
-    if (dirOrNode == undefined)
-      return objs[prevIndex]
+    // Are we trying to move?
+    if (dirOrNode !== undefined) {
 
-    // Move the needle...
-    const index = isMoveOp(dirOrNode)
-      ? walker(dirOrNode, prevIndex)
-      : indexOf(objs, dirOrNode, -1)
-    if (index < 0)
-      throw `Invalid dirOrNode (${JSON.stringify(dirOrNode)})`
+      // Move the needle...
+      const newIndex = isMoveOp(dirOrNode)
+        ? walker(dirOrNode, prevIndex)
+        : indexOf(objs, dirOrNode, -1)
 
-    onSelectCallback(objs[index], objs[prevIndex])
+      if (newIndex < 0)
+        throw `Invalid dirOrNode (${JSON.stringify(dirOrNode)})`
 
-    prevIndex = index
+      // side effect:
+      onSelectCallback(objs[newIndex], objs[prevIndex])
+
+      prevIndex = newIndex
+    }
 
     return objs[prevIndex]
   }

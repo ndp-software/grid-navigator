@@ -67,5 +67,5 @@ export const EMACS: KeyToMoveOpMap = {
 }
 
 export const CONSOLIDATED_MAP: KeyToMoveOpMap =
-  Object.assign({}, EMACS, VI, NUMPAD, DEFAULT_STANDARD); // Note ES3 syntax
+  Object.assign({}, EMACS, VI, NUMPAD, DEFAULT_STANDARD) // Note ES3 syntax
 

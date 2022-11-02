@@ -4,8 +4,8 @@ import {MoveOp, Stepper} from './stepper'
 /**
  * Returns a function that accepts a direction `dir` and a current location,
  * and provides the next location, based on `dir`.
- * @param cellCount total number of items
- * @param columnCount the size of a row, if applicable. If not provided, then "up" and "down" revert to prev and next, respectively.
+ * @param cellCount total number of items in the grid
+ * @param columnCount the size of a row, if applicable.
  * @param pageSize the vertical size of a "page" for the pageUp and down operations
  */
 export function gridWalker({

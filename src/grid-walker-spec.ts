@@ -11,6 +11,8 @@ describe('gridWalker', () => {
   specify('navigates', () => {
     const actual = subject('next', 1)
     expect(actual).to.eq(2)
+    expect(subject('next', 2)).to.eq(3)
+    expect(subject('next', 3)).to.eq(4)
   })
   specify('navigates by row', () => {
     const actual = subject('down', 1)

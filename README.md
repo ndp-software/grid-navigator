@@ -28,8 +28,7 @@ A proper demo will come, but in the meantime, see [https://amp-what.com](https:/
 
 [![Node.js CI](https://github.com/ndp-software/grid-navigator/actions/workflows/node.js.yml/badge.svg)](https://github.com/ndp-software/grid-navigator/actions/workflows/node.js.yml)
 
-If you have a grid of elements, images or tiles, and you'd like to add keyboard navigation, the process is just a few
-steps:
+To add keyboard navigation to a grid of elements, images or tiles, here are the steps:
 
 #### 1. Include the package in your project, eg.
 
@@ -41,33 +40,36 @@ steps:
 
 #### 2. Create an "elements provider".
 
-Your code must provide a function to tell the navigation grid which elements the user is navigating. This is specified
-as a function (rather than a static list of elements) so that it can be dynamic-- although if it never changes, there's
-no performance penalty. Here is a simple example function:
+Your code must provide a function to tell the Grid Navigator which elements the user is navigating. This is specified
+as a function that returns a NodeList of elements. (There's no performance penalty if this list
+of elements never changes.)  Here is a simple example function:
 
   ```typescript
   const elementsProvider = () => document.getElementsByTagName('li')
   ```
 
-This will be called lazily as it is needed.
+This will be called lazily when needed.
 
 #### 3. Create a "select callback".
 
-This is a function that shows the user the "selected" or "focused"  element. W3C recommends using `tabIndex`
-values of '-1' and '0' to keep track of this, but it's up to you. This callback function receives two arguments: the element, and a boolean about
-whether it's being selected or not. As the user moves from one element to the next, this will function will be called
+You are also responsible for reflecting the focus, or "select" status, to the user.
+This is done by implementing a callback function called `selectCallback`.  The W3C 
+recommends using `tabIndex` values of '-1' and '0' to keep track of this, but 
+it's up to you. This callback function will receive two arguments: the element, 
+and a boolean about whether the element is being selected or not. As the user 
+moves from one element to the next, this will function will be called
 twice-- once for leaving the old element, and once for entering the new one:
 
 ```typescript
 const selectCallback = (e, selectNow) => {
-  if (selectNow)
+  if (selectNow)     // entering/focusing
     e.tabindex = 0
-  else
+  else               // leaving/blur
     e.tabindex = -1
 }
 ```
 
-This may also need some accompanying CSS, such as:
+Typically you will use some accompanying CSS, such as:
 
 ```css
 [role="grid"] [tabindex="0"]:focus {
@@ -79,6 +81,8 @@ This may also need some accompanying CSS, such as:
 
 #### 4. Create a navigator:
 
+To stitch it all together, you need a GridNavigator object, fully configured.
+
 ```typescript
 import { GridNavigator } from 'grid-navigator'
 
@@ -87,28 +91,38 @@ const myNav = new GridNavigator({ elementProvider, selectCallback })
 
 #### 5. Call the handler
 
+The final required step is to delegate keyboard events to the GridNavigator.
 From the keydown handler of your grid container, you need to add a keydown handler:
 
 ```typescript
-
-const grid = document.getElementById('grid')
+const myNav = new GridNavigator({ elementProvider, selectCallback })
+const grid  = document.getElementById('grid')
 
 grid.addEventHandler('keydown', (e) => {
-  if (myNav.onKeyDown(e)) return
+  if (myNav.onKeyDown(e)) return // `onKeyDown` returns TRUE if it handles the event 
 
   // do you normal stuff
 ...
 })
 ```
 
-This keydown handler will look for applicable keys, and if present, call the `selectCallback` appropriately. It
-returns `true` if it handles the keyboard event, and `false` otherwise.
+This keydown handler will look for applicable keys, and if present, call the `selectCallback` appropriately. It returns `true` if it handles the keyboard event, and `false` otherwise.
 
 #### 6. Handle dynamic lists (Optional)
 
-The code uses the `elementProvider` you give it to calculate the elements that are being navigated. Once they are
-calculated, it assumes they are stable unless you tell it otherwise. To tell it, if the elements change, simply
-call `myNav.markStale()`, and `elementProvider` will be called again when needed.
+The code uses the `elementProvider` to calculate the elements that are being navigated. Once they are
+calculated, it assumes they are stable unless you tell it otherwise. To tell notify that the elements have changed, call `myNav.markStale()`. GridNavigator will call `elementProvider` (along with other appropriate callbacks). Note, this calculation is done lazily, so if no keyboard events are received,
+no element list will be requested.
+
+#### 7. Determine row sizes (Optional)
+
+By default, rows widths are determine by looking at the position of elements on the page,
+and uses a simple heuristic to see where columns line up. This works well 
+for responsive layouts, where the row width may be encoded in the CSS, and not readily available
+to the Javascript. If you have this information available, or just want to calculate it yourself, 
+provide a function `columnCountCalculator: (elems: NodeListOf<E>) => number`. It will be
+called whenever a layout change has been detected.
+
 
 ### React Component
 
@@ -136,7 +150,7 @@ useGridNavigator(myGridRef, selectCallback)
 
 ## Key Bindings
 
-The default key bindings are those suggested
+Out of the box, the default key bindings are those suggested
 by [the w3 documentation](https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-for-data-grids). These are
 specified within grid-navigator using a Javascript object, interpreted as a map:
 
@@ -171,7 +185,7 @@ To use any of these, import them and pass them in to the `GridNavigator` constru
 ```typescript
 import { KeyMaps } from 'grid-navigator'
 
-myKeyMaps = [...KeyMaps.DEFAULT_STANDARD, ...KeyMaps.VI, KeyMaps.EMACS]
+myKeyMaps = [...KeyMaps.DEFAULT_STANDARD, ...KeyMaps.VI, ...KeyMaps.EMACS]
 
 const myNav = new GridNavigator({
                                   keyMap: myKeyMaps,
