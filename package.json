@@ -1,7 +1,27 @@
 {
   "name": "grid-navigator",
   "version": "1.2.0",
+  "license": "UNLICENSED",
   "description": "no-fuss accessible keyboard navigation handling to a grid component",
+  "author": "Andrew Peterson",
+  "homepage": "https://github.com/ndp-software/grid-navigator",
+  "bugs": "https://github.com/ndp-software/grid-navigator/issues",
+  "keywords": [
+    "grid",
+    "accessibility",
+    "keyboard",
+    "navigation",
+    "arrow keys"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn build-lib && yarn ts-types",
+    "build-lib": "./node_modules/.bin/esbuild --outfile=./dist/index.js --bundle --sourcemap  --minify --format=esm --target=esnext src/index.ts",
+    "clean": "rm -f ./dist/* ./types/*",
+    "lint": "eslint --fix --ext=.ts src",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha",
+    "ts-types": "tsc --emitDeclarationOnly --outDir types --declaration src/index.ts",
+    "prepublishOnly": "yarn build"
+  },
   "main": "./dist/index.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -17,24 +37,6 @@
     "types/object-grid-navigator.d.ts",
     "types/stepper.d.ts"
   ],
-  "scripts": {
-    "build": "yarn clean && yarn build-lib && yarn ts-types",
-    "build-lib": "./node_modules/.bin/esbuild --outfile=./dist/index.js --bundle --sourcemap  --minify --format=esm --target=esnext src/index.ts",
-    "clean": "rm -f ./dist/* ./types/*",
-    "lint": "eslint --fix --ext=.ts src",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' ./node_modules/.bin/mocha",
-    "ts-types": "tsc --emitDeclarationOnly --outDir types --declaration src/index.ts",
-    "prepublishOnly": "yarn build"
-  },
-  "keywords": [
-    "grid",
-    "accessibility",
-    "keyboard",
-    "navigation",
-    "arrow keys"
-  ],
-  "author": "Andrew Peterson",
-  "license": "UNLICENSED",
   "devDependencies": {
     "@types/chai": "*",
     "@types/mocha": "*",
