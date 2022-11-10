@@ -27,15 +27,8 @@
   "types": "./types/index.d.ts",
   "files": [
     "README.md",
-    "dist/index.js",
-    "dist/index.d.ts",
-    "dist/index.js.map",
-    "types/grid-navigator.d.ts",
-    "types/grid-walker.d.ts",
-    "types/index.d.ts",
-    "types/key-maps.d.ts",
-    "types/object-grid-navigator.d.ts",
-    "types/stepper.d.ts"
+    "dist",
+    "types"
   ],
   "devDependencies": {
     "@types/chai": "*",

@@ -3,8 +3,8 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Language and Environment */
-    "target": "ES5",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-     "module": "ES2020",                                /* Specify what module code is generated. */
+    "target": "ES6",
+    "module": "es2015",
     "moduleResolution": "node",
 
     "declaration": true,
