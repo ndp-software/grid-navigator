@@ -51,9 +51,9 @@ export class Stepper {
 // type MoveOp = "prev" | "next" | "first" | "last" | "down" | "up" | "left" | "right" | "startOfLine" | "endOfLine" | "pageUp" | ...
 export type MoveOp = NonUnderscored<PickKeyByType<Stepper, () => number>>
 
-
-const MOVE_OPS: string[] = Object.keys(Stepper.prototype)
+const MOVE_OPS: string[] = Object.getOwnPropertyNames(Stepper.prototype)
                                  .filter((p) => p[0] !== '_')
+                                 .filter((p) => p !== 'constructor')
 
 export function isMoveOp(d: unknown): d is MoveOp {
   return MOVE_OPS.indexOf(d as string) !== -1

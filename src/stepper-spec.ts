@@ -75,6 +75,7 @@ describe('Stepper', () => {
 
 describe('isMoveOp', () => {
 
+  specify('next', () => expect(subjects.isMoveOp('next')).to.eq(true))
   specify('up', () => expect(subjects.isMoveOp('up')).to.eq(true))
   specify('down', () => expect(subjects.isMoveOp('down')).to.eq(true))
   specify('first', () => expect(subjects.isMoveOp('first')).to.eq(true))
