@@ -110,16 +110,18 @@ This keydown handler will look for applicable keys, and if present, call the `se
 
 #### 6. Handle dynamic lists (Optional)
 
-The code uses the `elementProvider` to calculate the elements that are being navigated. Once they are
-calculated, it assumes they are stable unless you tell it otherwise. To tell notify that the elements have changed, call `myNav.markStale()`. GridNavigator will call `elementProvider` (along with other appropriate callbacks). Note, this calculation is done lazily, so if no keyboard events are received,
-no element list will be requested.
+The code uses the `elementProvider` to determine the elements being navigated. Once they are
+calculated, it assumes they are stable unless you tell it otherwise. To indicate that elements have changed, 
+call `myNav.markStale()`, and GridNavigator will call `elementProvider` (along with other appropriate callbacks). 
+Note, this calculation is done lazily, only during navigation, which means there is minimal overhead 
+for a heavily dynamic grid.
 
 #### 7. Determine row sizes (Optional)
 
 By default, rows widths are determine by looking at the position of elements on the page,
 and uses a simple heuristic to see where columns line up. This works well 
-for responsive layouts, where the row width may be encoded in the CSS, and not readily available
-to the Javascript. If you have this information available, or just want to calculate it yourself, 
+for responsive layouts, where the row width is determined within the CSS, and not readily available
+to the Javascript. If you have this information available in JS, or just want to calculate it yourself, 
 provide a function `columnCountCalculator: (elems: NodeListOf<E>) => number`. It will be
 called whenever a layout change has been detected.
 
@@ -216,4 +218,4 @@ To release, `yarn publish`
 
 * [Build A Library With esbuild](https://medium.com/geekculture/build-a-library-with-esbuild-23235712f3c)
 
-Copyright (c) 2021–2022 Andrew J. Peterson, NDP Software. All Rights Reserved.
+Copyright (c) 2021–2023 Andrew J. Peterson, NDP Software. All Rights Reserved.
