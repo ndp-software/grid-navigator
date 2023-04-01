@@ -50,7 +50,7 @@ type GridNavigatorInit<E extends Node> = {
    * The default will look at the position of the elements on the page and make a
    * good guess, assuming a regular grid.
    */
-  columnCountCalculator: (elems: NodeListOf<E>) => number
+  columnCountCalculator?: (elems: NodeListOf<E>) => number
 }
 
 
