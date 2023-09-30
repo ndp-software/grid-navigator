@@ -23,7 +23,6 @@
     "prepublishOnly": "yarn build"
   },
   "main": "./dist/index.js",
-  "module": "./lib/index.js",
   "types": "./types/index.d.ts",
   "files": [
     "README.md",
