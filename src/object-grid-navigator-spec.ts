@@ -1,8 +1,9 @@
-/* eslint-env mocha */
-import {expect} from 'chai'
-import sinon                 from 'sinon'
 import {ObjectGridNavigator} from './object-grid-navigator'
 import {objectGridNavigator} from './object-grid-navigator'
+import specify, {describe, beforeEach, mock} from 'node:test'
+
+import assert from 'node:assert/strict'
+
 
 describe('ObjectGridNavigator', () => {
   const a = [{k: 'a'},
@@ -11,60 +12,58 @@ describe('ObjectGridNavigator', () => {
     {k: 'd'},
     {k: 'e'}
   ]
-  type Value = typeof a[number]
-  let spy: sinon.SinonSpy<[next: Value, prev: Value | null], void>
   let subject: ObjectGridNavigator<typeof a[number]>
+  let spy
 
   beforeEach(() => {
-    spy = sinon.spy() as typeof spy
+    spy = mock.fn()
     subject = objectGridNavigator(a, 2, 3, spy, a[0])
-    expect(subject()).to.eq(a[0])
+    assert.deepEqual(subject(), a[0])
   })
 
   specify('given no parameters', () => {
     const subject = objectGridNavigator(a, 2, 3, spy, a[2])
 
-    expect(subject()).to.eq(a[2])
+    assert.deepEqual(subject(), a[2])
   })
 
   specify('navigating with direction', () => {
 
-    expect(subject('next')).to.eq(a[1])
-    expect(spy.calledOnce).to.eq(true)
-    expect(spy.calledWith(a[1], a[0])).to.eq(true)
+    assert.deepEqual(subject('next'), a[1])
+    assert.deepEqual(spy.mock.callCount(), 1)
+    assert.deepEqual(spy.mock.calls[0].arguments, [a[1], a[0]])
 
-    expect(subject('next')).to.eq(a[2])
-    expect(subject('next')).to.eq(a[3])
-    expect(subject('next')).to.eq(a[4])
-    expect(subject('next')).to.eq(a[0])
-    expect(subject('next')).to.eq(a[1])
+    assert.deepEqual(subject('next'), a[2])
+    assert.deepEqual(subject('next'), a[3])
+    assert.deepEqual(subject('next'), a[4])
+    assert.deepEqual(subject('next'), a[0])
+    assert.deepEqual(subject('next'), a[1])
   })
 
   specify('given an object in the list', () => {
 
     const subject = objectGridNavigator(a, 2, 3, spy, a[0])
 
-    expect(subject(a[3])).to.eq(a[3])
+    assert.deepEqual(subject(a[3]), a[3])
 
-    expect(spy.calledOnce).to.eq(true)
-    expect(spy.calledWith(a[3], a[0])).to.eq(true)
+    assert.deepEqual(spy.mock.callCount(), 1)
+    assert.deepEqual(spy.mock.calls[0].arguments, [a[3], a[0]])
 
-    expect(subject(a[1])).to.eq(a[1])
+    assert.deepEqual(subject(a[1]), a[1])
   })
 
   specify('given an object not the list raises exception and maintains state', () => {
     const subject = objectGridNavigator(a, 2, 3, spy, a[1])
-
-    expect(() => subject({k: 'foobar'})).throws('Invalid dirOrNode ({"k":"foobar"})')
-    expect(subject()).to.eq(a[1])
+    assert.throws(() => subject({k: 'foobar'}), { message: 'Invalid dirOrNode ({"k":"foobar"})'})
+    assert.deepEqual(subject(), a[1])
   })
 
   specify('given an unknown command raises exception and maintains state', () => {
     const subject = objectGridNavigator(a, 2, 3, spy, a[2])
 
-    expect(() => subject('go west' as 'next')).throws('Invalid dirOrNode ("go west")')
+    assert.throws(() => subject('go west' as 'next'), {message: 'Invalid dirOrNode ("go west")'})
 
-    expect(subject()).to.eq(a[2])
+    assert.deepEqual(subject(), a[2])
   })
 })
 

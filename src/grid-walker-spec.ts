@@ -1,25 +1,28 @@
-import * as subjects from './grid-walker'
-import { expect }    from 'chai'
+import {gridWalker} from './grid-walker'
+import test, {describe} from 'node:test'
+import assert from 'node:assert/strict'
 
 describe('gridWalker', () => {
-  const subject = subjects.gridWalker({
+  const subject = gridWalker({
     cellCount:   8,
     columnCount: 3,
     pageSize:    5
   })
 
-  specify('navigates', () => {
+  test('navigates', () => {
     const actual = subject('next', 1)
-    expect(actual).to.eq(2)
-    expect(subject('next', 2)).to.eq(3)
-    expect(subject('next', 3)).to.eq(4)
+    assert.deepEqual(actual, 2)
+    assert.deepEqual(subject('next', 2), 3)
+    assert.deepEqual(subject('next', 3), 4)
   })
-  specify('navigates by row', () => {
+
+  test('navigates by row', () => {
     const actual = subject('down', 1)
-    expect(actual).to.eq(4)
+    assert.deepEqual(actual, 4)
   })
-  specify('navigates by page', () => {
+
+  test('navigates by page', () => {
     const actual = subject('pageDown', 1)
-    expect(actual).to.eq(7)
+    assert.deepEqual(actual, 7)
   })
 })

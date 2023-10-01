@@ -81,7 +81,7 @@ export function objectGridNavigator<O extends Objectish>(
         : indexOf(objs, dirOrNode, -1)
 
       if (newIndex < 0)
-        throw `Invalid dirOrNode (${JSON.stringify(dirOrNode)})`
+        throw new Error(`Invalid dirOrNode (${JSON.stringify(dirOrNode)})`)
 
       // side effect:
       onSelectCallback(objs[newIndex], objs[prevIndex])

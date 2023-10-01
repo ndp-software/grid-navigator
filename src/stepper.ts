@@ -22,8 +22,8 @@ export class Stepper {
   constructor(private readonly _size: number,
               private readonly _rowLength: number,
               private readonly _pageSize: number) {
-    if (_rowLength <= 0) throw '`rowLength` must be positive'
-    if (_pageSize <= 0) throw '`pageSize` must be positive'
+    if (_rowLength <= 0) throw new Error('`rowLength` must be positive')
+    if (_pageSize <= 0) throw new Error('`pageSize` must be positive')
     this._lastIndex = Math.max(0, _size - 1)
   }
 
